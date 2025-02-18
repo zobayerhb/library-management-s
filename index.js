@@ -45,6 +45,15 @@ async function run() {
       res.send(result);
     });
 
+    // book details
+    app.get("/book-details/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = {  id };
+      const result = await lmsBooksCollections.findOne(filter);
+      console.log(result);
+      res.send(result);
+    });
+
     app.get("/", async (req, res) => {
       res.send("Library Management System Server.....");
     });
