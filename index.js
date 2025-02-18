@@ -8,7 +8,7 @@ const port = process.env.PORT || 5000;
 app.use(express.json());
 app.use(cors());
 
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 const uri = process.env.MONGO_URI;
 
@@ -33,6 +33,15 @@ async function run() {
     // ALL BOOKS GET
     app.get("/books", async (req, res) => {
       const result = await lmsBooksCollections.find().toArray();
+      res.send(result);
+    });
+
+    // BOOKS CATEGORIES DETAILS
+    app.get("/booksCategory/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const result = await lmsBooksCollections.findOne(filter);
+      console.log("result--------->", result);
       res.send(result);
     });
 
